@@ -12,12 +12,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit-Tests für {@link BookService}.
+ * <p>
+ * Verwendet Mockito, um das Verhalten von {@link BookRepository} und {@link CategoryRepository}
+ * zu simulieren und die Geschäftslogik unabhängig zu testen.
+ */
 public class BookServiceTest {
 
     private BookRepository bookRepo;
     private CategoryRepository categoryRepo;
     private BookService bookService;
 
+    /**
+     * Initialisiert die Mocks und den zu testenden Service vor jedem Testlauf.
+     */
     @BeforeEach
     void setup() {
         bookRepo = mock(BookRepository.class);
@@ -27,6 +36,10 @@ public class BookServiceTest {
         bookService.setCategoryRepo(categoryRepo);
     }
 
+    /**
+     * Testet das Speichern eines Buchs mit einer existierenden Kategorie.
+     * Erwartet, dass das Buch erfolgreich gespeichert wird.
+     */
     @Test
     void testSaveBookWithExistingCategory() {
         Category category = new Category();
@@ -46,6 +59,10 @@ public class BookServiceTest {
         verify(bookRepo, times(1)).save(book);
     }
 
+    /**
+     * Testet, ob beim Speichern eines Buchs mit einer nicht existierenden Kategorie
+     * eine {@link IllegalArgumentException} geworfen wird.
+     */
     @Test
     void testSaveBookWithNonExistingCategoryThrowsException() {
         Category category = new Category();
@@ -65,6 +82,9 @@ public class BookServiceTest {
         assertEquals("Kategorie existiert nicht: Unbekannt", exception.getMessage());
     }
 
+    /**
+     * Testet das Aktualisieren eines vorhandenen Buchs mit gültigen neuen Daten.
+     */
     @Test
     void testUpdateBookWithExistingCategory() {
         Category category = new Category();
@@ -92,6 +112,10 @@ public class BookServiceTest {
         verify(bookRepo, times(1)).save(existingBook);
     }
 
+    /**
+     * Testet das Löschen eines Buchs, wenn es existiert.
+     * Erwartet: true, und Löschvorgang wird ausgeführt.
+     */
     @Test
     void testDeleteBookWhenExists() {
         when(bookRepo.existsById(1L)).thenReturn(true);
@@ -102,6 +126,10 @@ public class BookServiceTest {
         verify(bookRepo, times(1)).deleteById(1L);
     }
 
+    /**
+     * Testet das Löschen eines Buchs, wenn es nicht existiert.
+     * Erwartet: false, und kein Löschvorgang.
+     */
     @Test
     void testDeleteBookWhenNotExists() {
         when(bookRepo.existsById(1L)).thenReturn(false);

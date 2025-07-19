@@ -13,7 +13,10 @@ import java.util.List;
 
 /**
  * REST-Controller für Kategorien.
- * Liefert alle verfügbaren Kategorien und erlaubt einmalige Initialisierung.
+ * <p>
+ * Bietet Endpunkte zum Abrufen aller verfügbaren Kategorien sowie zur Initialisierung
+ * eines vordefinierten Kategoriesatzes. Dieser Controller ist primär für die Verwaltung
+ * der Buchkategorien im System zuständig.
  */
 @RestController
 @RequestMapping("/api/categories")
@@ -26,6 +29,8 @@ public class CategoryController {
 
     /**
      * Gibt alle vorhandenen Kategorien zurück.
+     *
+     * @return eine Liste aller Kategorien im System
      */
     @GetMapping
     public Iterable<Category> getAllCategories() {
@@ -34,8 +39,15 @@ public class CategoryController {
     }
 
     /**
-     * Initialisiert vordefinierte Kategorien (einmaliger Setup-Aufruf).
-     * ⚠️ Optional absichern oder nach Deployment entfernen!
+     * Initialisiert einen vordefinierten Satz von Kategorien.
+     * <p>
+     * Diese Methode kann verwendet werden, um das System einmalig mit Standardkategorien
+     * zu befüllen. Bereits vorhandene Kategorien werden nicht erneut gespeichert.
+     * <p>
+     * ⚠️ Hinweis: Sollte nach der Initialbefüllung deaktiviert oder geschützt werden.
+     *
+     * @return eine ResponseEntity mit einer Zusammenfassung der erstellten Kategorien oder einem Hinweis,
+     *         dass bereits alle vorhanden waren
      */
     @PostMapping("/init")
     public ResponseEntity<?> initDefaultCategories() {
