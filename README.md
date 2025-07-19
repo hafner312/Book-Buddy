@@ -21,83 +21,81 @@ my-project/
 
 Öffne ein Terminal und führe im `backend/`-Verzeichnis folgenden Befehl aus:
 
-```bash
 cd backend  
 mvn spring-boot:run
-Wenn ein mvnw-Wrapper vorhanden ist:
 
-Linux/macOS: ./mvnw spring-boot:run
+Wenn ein `mvnw`-Wrapper vorhanden ist:  
+- Linux/macOS: `./mvnw spring-boot:run`  
+- Windows: `mvnw spring-boot:run`
 
-Windows: mvnw spring-boot:run
-
-Der Backend-Server läuft standardmäßig unter:
+Der Backend-Server läuft standardmäßig unter:  
 http://localhost:8080
 
-🌐 Frontend starten (React + Vite)
-Öffne ein weiteres Terminal und führe im frontend/-Verzeichnis Folgendes aus:
+### 🌐 Frontend starten (React + Vite)
 
-bash
-Kopieren
-Bearbeiten
+Öffne ein weiteres Terminal und führe im `frontend/`-Verzeichnis Folgendes aus:
+
 cd frontend  
 npm install  
 npm run dev
-Das Frontend ist erreichbar unter:
+
+Das Frontend ist erreichbar unter:  
 http://localhost:5173
 
-🔄 API-Kommunikation (Proxy-Konfiguration)
-Um API-Anfragen vom Frontend an das Spring Boot Backend weiterzuleiten, ist in frontend/vite.config.js folgende Proxy-Regel eingerichtet:
+## 🔄 API-Kommunikation (Proxy-Konfiguration)
 
-js
-Kopieren
-Bearbeiten
-export default {
-  server: {
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
-  }
+Um API-Anfragen vom Frontend an das Spring Boot Backend weiterzuleiten, ist in `frontend/vite.config.js` folgende Proxy-Regel eingerichtet:
+
+export default {  
+  server: {  
+    proxy: {  
+      '/api': 'http://localhost:8080'  
+    }  
+  }  
 };
+
 Beispiel für eine API-Anfrage im Frontend:
 
-js
-Kopieren
-Bearbeiten
-fetch('/api/example')
-  .then(res => res.json())
+fetch('/api/example')  
+  .then(res => res.json())  
   .then(data => console.log(data));
-📚 JavaDoc generieren (lokal)
-Du kannst für alle Java-Klassen im Backend automatisch HTML-Dokumentation erzeugen:
 
-bash
-Kopieren
-Bearbeiten
-# Hauptcode dokumentieren
-mvn javadoc:javadoc
+## 🧪 Entwicklung & Debugging
 
-# Testcode dokumentieren (optional)
-mvn javadoc:test-javadoc
-📂 Danach findest du die Dokumentation unter:
+- React unterstützt Hot Module Reloading (HMR) via Vite  
+- Backend-Routen können z. B. mit curl, Postman oder HTTPie getestet werden  
+- Konsistente API-Routen über `/api/...` empfohlen
 
-backend/target/site/apidocs/index.html
+## 📦 Deployment (optional)
 
-backend/target/site/testapidocs/index.html (optional)
-
-👉 Diese Dateien sind nicht versioniert (liegen im target/-Ordner) und werden bei jedem Build neu generiert.
-
-🧪 Entwicklung & Debugging
-React unterstützt Hot Module Reloading (HMR) via Vite
-
-Backend-Routen können z. B. mit curl, Postman oder HTTPie getestet werden
-
-Konsistente API-Routen über /api/... empfohlen
-
-📦 Deployment (optional)
 Deployment-Prozesse (z. B. Docker oder CI/CD) sind aktuell nicht konfiguriert, können aber bei Bedarf ergänzt werden.
 
-🧹 Nützliche Befehle (Zusammenfassung)
-Kontext	Befehl	Beschreibung
-Backend	mvn spring-boot:run	Startet Spring Boot Server
-Backend	mvn javadoc:javadoc	Erzeugt HTML-Dokumentation (Java)
-Frontend	npm run dev	Startet React Dev Server (Vite)
-Frontend	npm install	Installiert Abhängigkeiten
+## 🧹 Nützliche Befehle (Zusammenfassung)
+
+| Kontext     | Befehl                | Beschreibung                     |  
+|-------------|------------------------|----------------------------------|  
+| Backend     | mvn spring-boot:run    | Startet Spring Boot Server       |  
+| Frontend    | npm run dev            | Startet React Dev Server (Vite) |  
+| Frontend    | npm install            | Installiert Abhängigkeiten       |
+
+
+📚 JavaDoc anzeigen
+Die JavaDoc-Dokumentation für das Backend ist bereits generiert und liegt lokal im Projektordner:
+
+backend/target/site/apidocs/index.html → Dokumentation des Hauptcodes
+
+backend/target/site/testapidocs/index.html → Dokumentation der Testklassen (optional)
+
+📂 So öffnest du sie:
+
+Navigiere im Projektverzeichnis zu backend/target/site/apidocs/
+
+Öffne die Datei index.html per Doppelklick oder ziehe sie in dein Browserfenster
+
+Hinweis: Der target/-Ordner wird nicht versioniert. Falls du die Dokumentation neu generieren willst, nutze mvn javadoc:javadoc bzw. mvn javadoc:test-javadoc.
+
+## 📬 Feedback oder Fragen?
+
+Dieses Projekt dient als Ausgangsbasis für produktionsreife Anwendungen. Verbesserungsvorschläge, Pull Requests oder Feedback sind willkommen.
+
+
