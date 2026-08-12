@@ -84,6 +84,13 @@ public class BookService {
         book.setTitle(bookDetails.getTitle());
         book.setAuthor(bookDetails.getAuthor());
         book.setCategory(existingCategory);
+        if (bookDetails.getStatus() != null) {
+            book.setStatus(bookDetails.getStatus());
+        }
+        book.setRating(bookDetails.getRating());
+        book.setPages(bookDetails.getPages());
+        book.setCurrentPage(bookDetails.getCurrentPage());
+        book.setNotes(bookDetails.getNotes());
 
         return bookRepo.save(book);
     }

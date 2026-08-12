@@ -1,12 +1,15 @@
-// React importieren (für JSX)
-import React from "react";
+import { Link } from "react-router-dom";
 
-// Fallback-Komponente für nicht gefundene Routen (404-Seite)
 export default function NotFound(): JSX.Element {
   return (
-    <div>
-      <h1>Seite nicht gefunden</h1>
-      <p>Die aufgerufene URL existiert nicht.</p>
+    <div className="page">
+      <div className="card empty-state">
+        <h1>📖 Seite nicht gefunden</h1>
+        <p>Diese Seite existiert nicht – vielleicht ist sie in einem anderen Regal.</p>
+        <Link to="/" className="btn btn-accent" style={{ marginTop: "1rem" }}>
+          Zurück zur Übersicht
+        </Link>
+      </div>
     </div>
   );
 }

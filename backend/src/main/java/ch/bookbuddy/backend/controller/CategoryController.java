@@ -39,6 +39,23 @@ public class CategoryController {
     }
 
     /**
+     * Legt eine neue Kategorie an, sofern noch keine mit demselben Namen existiert.
+     *
+     * @param category das Kategorie-Objekt mit dem gewünschten Namen
+     * @return die neu angelegte Kategorie, oder die bereits existierende bei Namenskollision
+     */
+    @PostMapping
+    public ResponseEntity<Category> createCategory(@org.springframework.web.bind.annotation.RequestBody Category category) {
+        Category existing = categoryRepo.findByName(category.getName());
+        if (existing != null) {
+            return ResponseEntity.ok(existing);
+        }
+        Category saved = categoryRepo.save(new Category(category.getName()));
+        logger.info("Neue Kategorie angelegt: {}", saved.getName());
+        return ResponseEntity.ok(saved);
+    }
+
+    /**
      * Initialisiert einen vordefinierten Satz von Kategorien.
      * <p>
      * Diese Methode kann verwendet werden, um das System einmalig mit Standardkategorien

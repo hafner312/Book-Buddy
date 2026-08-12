@@ -5,7 +5,8 @@ import ReactDOM from "react-dom/client";
 // Import der Haupt-App-Komponente
 import App from "./App";
 
-// Globales CSS importieren
+// Globales CSS importieren (Design-Tokens zuerst, dann Komponentenstile)
+import "./index.css";
 import "./App.css";
 
 // Einstiegspunkt für die Anwendung (Root-Element finden und App einhängen)

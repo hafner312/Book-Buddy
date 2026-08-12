@@ -1,6 +1,8 @@
 package ch.bookbuddy.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -45,6 +47,39 @@ public class Book {
     @ManyToOne(optional = false)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    /**
+     * Lesestatus des Buches. Neu angelegte Bücher starten standardmäßig auf der Leseliste.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ReadingStatus status = ReadingStatus.WANT_TO_READ;
+
+    /**
+     * Persönliche Bewertung (0–5 Sterne), optional, nur sinnvoll bei fertig gelesenen Büchern.
+     */
+    @Min(value = 0, message = "Bewertung muss zwischen 0 und 5 liegen.")
+    @Max(value = 5, message = "Bewertung muss zwischen 0 und 5 liegen.")
+    private Integer rating;
+
+    /**
+     * Gesamtzahl Seiten des Buches, optional.
+     */
+    @Min(value = 1, message = "Seitenzahl muss mindestens 1 sein.")
+    private Integer pages;
+
+    /**
+     * Aktuell gelesene Seite, optional – Basis für die Fortschrittsanzeige beim Lesen.
+     */
+    @Min(value = 0, message = "Aktuelle Seite darf nicht negativ sein.")
+    private Integer currentPage;
+
+    /**
+     * Persönliche Notizen/Eindrücke zum Buch, optional.
+     */
+    @Size(max = 2000, message = "Notizen dürfen maximal 2000 Zeichen lang sein.")
+    @Column(length = 2000)
+    private String notes;
 
     /**
      * Standardkonstruktor für JPA.
@@ -94,6 +129,46 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public ReadingStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ReadingStatus status) {
+        this.status = status;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Integer getPages() {
+        return pages;
+    }
+
+    public void setPages(Integer pages) {
+        this.pages = pages;
+    }
+
+    public Integer getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(Integer currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     /**
