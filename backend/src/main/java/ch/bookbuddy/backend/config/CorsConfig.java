@@ -33,7 +33,7 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         .allowedOrigins(
                                 "http://localhost:5173",
-                                "https://bookbuddy-frontend.onrender.com")
+                                "https://bookbuddy-frontend-o8mk.onrender.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }
