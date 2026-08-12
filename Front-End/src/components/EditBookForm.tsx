@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../apiConfig";
 
 interface Category {
   id: number;
@@ -29,7 +30,7 @@ export default function EditBookForm({ book, onCancel, onSave }: EditBookFormPro
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/categories");
+        const response = await axios.get(`${API_BASE_URL}/api/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error("Fehler beim Laden der Kategorien:", error);
@@ -49,7 +50,7 @@ export default function EditBookForm({ book, onCancel, onSave }: EditBookFormPro
     }
 
     try {
-      const response = await axios.put(`http://localhost:8080/api/books/${book.id}`, {
+      const response = await axios.put(`${API_BASE_URL}/api/books/${book.id}`, {
         id: book.id,
         title,
         author,

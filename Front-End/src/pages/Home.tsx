@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../apiConfig";
 import EditBookForm from "../components/EditBookForm";
 
 // Typdefinition eines Buch-Objekts
@@ -19,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/books");
+        const response = await axios.get(`${API_BASE_URL}/api/books`);
         const data = Array.isArray(response.data)
           ? response.data
           : response.data.content || [];
@@ -34,7 +35,7 @@ export default function Home() {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await axios.delete(`http://localhost:8080/api/books/${id}`);
+      const response = await axios.delete(`${API_BASE_URL}/api/books/${id}`);
       if (response.status === 200 || response.status === 204) {
         setBooks((prev) => prev.filter((book) => book.id !== id));
       } else {
@@ -52,7 +53,7 @@ export default function Home() {
   const handleSave = async (updatedBook: Book) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/api/books/${updatedBook.id}`,
+        `${API_BASE_URL}/api/books/${updatedBook.id}`,
         updatedBook,
         { headers: { "Content-Type": "application/json" } }
       );

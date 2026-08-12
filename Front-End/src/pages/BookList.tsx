@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../apiConfig";
 
 // Typdefinition für ein Buch
 interface Book {
@@ -25,7 +26,7 @@ export default function BookList() {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/books");
+      const response = await axios.get(`${API_BASE_URL}/api/books`);
       const list = Array.isArray(response.data)
         ? response.data
         : response.data.content || [];
@@ -61,7 +62,7 @@ export default function BookList() {
         author: editedAuthor,
         category: books.find((b) => b.id === id)?.category ?? null,
       };
-      await axios.put(`http://localhost:8080/api/books/${id}`, payload);
+      await axios.put(`${API_BASE_URL}/api/books/${id}`, payload);
       alert("Buch erfolgreich aktualisiert.");
       fetchBooks();
       cancelEdit();
@@ -77,7 +78,7 @@ export default function BookList() {
     if (!window.confirm("Buch wirklich löschen?")) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/books/${id}`);
+      await axios.delete(`${API_BASE_URL}/api/books/${id}`);
       fetchBooks();
     } catch (err) {
       console.error("Fehler beim Löschen", err);

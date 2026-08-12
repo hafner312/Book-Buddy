@@ -44,6 +44,13 @@
             <version>8.0.28</version>
         </dependency>
 
+        <!-- H2 (nur fuer das "render"-Profil der kostenlosen Live-Demo, ersetzt MySQL) -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
         <!-- Bean Validation -->
         <dependency>
             <groupId>javax.validation</groupId>

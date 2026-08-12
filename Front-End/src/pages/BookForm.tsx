@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE_URL } from "../apiConfig";
 
 export default function BookForm() {
   const [title, setTitle] = useState<string>("");
@@ -11,7 +12,7 @@ export default function BookForm() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/categories");
+        const response = await axios.get(`${API_BASE_URL}/api/categories`);
         const categoryNames = response.data.map((cat: { name: string }) => cat.name);
         setCategories(categoryNames);
       } catch (err) {
@@ -38,7 +39,7 @@ export default function BookForm() {
     };
 
     try {
-      const response = await axios.post("http://localhost:8080/api/books", payload);
+      const response = await axios.post(`${API_BASE_URL}/api/books`, payload);
       if (response.status === 200 || response.status === 201) {
         alert("Buch erfolgreich gespeichert.");
         setTitle("");
