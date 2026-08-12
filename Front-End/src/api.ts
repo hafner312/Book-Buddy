@@ -1,8 +1,13 @@
 import axios from "axios";
 import { API_BASE_URL } from "./apiConfig";
+import { getOwnerId } from "./ownerId";
 import type { Book, BookInput, Category } from "./types";
 
 const client = axios.create({ baseURL: API_BASE_URL });
+client.interceptors.request.use((config) => {
+  config.headers["X-Owner-Id"] = getOwnerId();
+  return config;
+});
 
 function unwrapList<T>(data: unknown): T[] {
   if (Array.isArray(data)) return data as T[];

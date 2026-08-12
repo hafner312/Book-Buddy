@@ -20,6 +20,8 @@ import static org.mockito.Mockito.*;
  */
 public class BookServiceTest {
 
+    private static final String OWNER = "owner-1";
+
     private BookRepository bookRepo;
     private CategoryRepository categoryRepo;
     private BookService bookService;
@@ -53,9 +55,10 @@ public class BookServiceTest {
         when(categoryRepo.findByName("Roman")).thenReturn(category);
         when(bookRepo.save(book)).thenReturn(book);
 
-        Book savedBook = bookService.saveBookWithCategory(book);
+        Book savedBook = bookService.saveBookWithCategory(book, OWNER);
 
         assertNotNull(savedBook);
+        assertEquals(OWNER, book.getOwnerId());
         verify(bookRepo, times(1)).save(book);
     }
 
@@ -76,7 +79,7 @@ public class BookServiceTest {
         when(categoryRepo.findByName("Unbekannt")).thenReturn(null);
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            bookService.saveBookWithCategory(book);
+            bookService.saveBookWithCategory(book, OWNER);
         });
 
         assertEquals("Kategorie existiert nicht: Unbekannt", exception.getMessage());
@@ -95,17 +98,18 @@ public class BookServiceTest {
         existingBook.setTitle("Alt");
         existingBook.setAuthor("Alt Autor");
         existingBook.setCategory(category);
+        existingBook.setOwnerId(OWNER);
 
         Book updatedBook = new Book();
         updatedBook.setTitle("Neu");
         updatedBook.setAuthor("Neu Autor");
         updatedBook.setCategory(category);
 
-        when(bookRepo.findById(1L)).thenReturn(Optional.of(existingBook));
+        when(bookRepo.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(existingBook));
         when(categoryRepo.findByName("Roman")).thenReturn(category);
         when(bookRepo.save(any(Book.class))).thenReturn(existingBook);
 
-        Book result = bookService.updateBook(1L, updatedBook);
+        Book result = bookService.updateBook(1L, updatedBook, OWNER);
 
         assertEquals("Neu", result.getTitle());
         assertEquals("Neu Autor", result.getAuthor());
@@ -118,12 +122,15 @@ public class BookServiceTest {
      */
     @Test
     void testDeleteBookWhenExists() {
-        when(bookRepo.existsById(1L)).thenReturn(true);
+        Book existingBook = new Book();
+        existingBook.setId(1L);
+        existingBook.setOwnerId(OWNER);
+        when(bookRepo.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.of(existingBook));
 
-        boolean result = bookService.deleteBook(1L);
+        boolean result = bookService.deleteBook(1L, OWNER);
 
         assertTrue(result);
-        verify(bookRepo, times(1)).deleteById(1L);
+        verify(bookRepo, times(1)).delete(existingBook);
     }
 
     /**
@@ -132,11 +139,11 @@ public class BookServiceTest {
      */
     @Test
     void testDeleteBookWhenNotExists() {
-        when(bookRepo.existsById(1L)).thenReturn(false);
+        when(bookRepo.findByIdAndOwnerId(1L, OWNER)).thenReturn(Optional.empty());
 
-        boolean result = bookService.deleteBook(1L);
+        boolean result = bookService.deleteBook(1L, OWNER);
 
         assertFalse(result);
-        verify(bookRepo, never()).deleteById(anyLong());
+        verify(bookRepo, never()).delete(any(Book.class));
     }
 }

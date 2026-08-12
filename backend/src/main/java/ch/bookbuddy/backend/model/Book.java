@@ -82,6 +82,14 @@ public class Book {
     private String notes;
 
     /**
+     * Anonyme Besucher-Kennung (siehe OwnerIdFilter) - jeder Browser sieht nur
+     * seine eigene Bibliothek, damit sich gleichzeitige Besucher der Live-Demo
+     * nicht gegenseitig Buecher loeschen/veraendern.
+     */
+    @Column(nullable = false)
+    private String ownerId;
+
+    /**
      * Standardkonstruktor für JPA.
      */
     public Book() {}
@@ -169,6 +177,14 @@ public class Book {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     /**
