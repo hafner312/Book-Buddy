@@ -7,6 +7,7 @@ import Impressum from "./pages/Impressum";
 import NotFound from "./pages/NotFound";
 
 import GlobalNavigation from "./components/GlobalNavigation";
+import SiteFooter from "./components/SiteFooter";
 
 function App(): JSX.Element {
   return (
@@ -21,7 +22,7 @@ function App(): JSX.Element {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      <footer className="site-footer">BookBuddy – ein Projekt von Patrik Hafner</footer>
+      <SiteFooter />
     </BrowserRouter>
   );
 }
