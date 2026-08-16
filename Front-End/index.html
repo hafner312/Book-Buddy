@@ -5,9 +5,91 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BookBuddy – Meine Bibliothek</title>
+
+    <!--
+      Kritische Stile für das Grundgerüst unten. Sie stehen bewusst hier im
+      Dokument statt in einer eigenen Datei: So braucht der erste Anblick
+      keine zweite Anfrage und erscheint sofort, nicht erst nach dem
+      Stylesheet.
+    -->
+    <style>
+      :root {
+        --start-bg: #f6f1e6;
+        --start-gruen: #2f4d3a;
+        --start-rahmen: #e3d8c0;
+        --start-platzhalter: #ece4d3;
+      }
+      body {
+        margin: 0;
+        background: var(--start-bg);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .start-navbar {
+        padding: 0.9rem 1.75rem;
+        background: var(--start-gruen);
+        color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+      }
+      .start-marke {
+        font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .start-seite {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 2rem 1.75rem;
+      }
+      /* Grauflächen in der Form der späteren Inhalte, damit beim Erscheinen
+         nichts springt. */
+      .start-block {
+        background: var(--start-platzhalter);
+        border-radius: 12px;
+      }
+      .start-titel { height: 2.1rem; width: 15rem; margin-bottom: 0.75rem; }
+      .start-zeile { height: 1rem; width: 22rem; max-width: 80%; margin-bottom: 2.2rem; }
+      .start-kacheln {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+      .start-kachel {
+        height: 92px;
+        background: #fffdf8;
+        border: 1px solid var(--start-rahmen);
+        border-radius: 12px;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <!--
+      Statisches Grundgerüst: Ohne es zeigt der Browser eine weisse Seite, bis
+      das JavaScript geladen, ausgewertet und React eingehängt ist - je nach
+      Verbindung eine halbe Sekunde oder mehr.
+
+      React ersetzt diese Kinder beim ersten Rendern vollständig, es muss also
+      nichts weggeräumt werden. Bewusst nur Kopfleiste und Umrisse, keine
+      Menüpunkte: So kann das Gerüst nicht von der echten Navigation abweichen,
+      wenn sich dort etwas ändert.
+    -->
+    <div id="root">
+      <div aria-hidden="true">
+        <div class="start-navbar">
+          <span class="start-marke">📚 BookBuddy</span>
+        </div>
+        <div class="start-seite">
+          <div class="start-block start-titel"></div>
+          <div class="start-block start-zeile"></div>
+          <div class="start-kacheln">
+            <div class="start-kachel"></div>
+            <div class="start-kachel"></div>
+            <div class="start-kachel"></div>
+            <div class="start-kachel"></div>
+            <div class="start-kachel"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
