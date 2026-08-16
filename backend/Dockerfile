@@ -1,3 +1,13 @@
+# VERALTET - baut nur das Backend, ohne Frontend.
+#
+# Fuer die Bereitstellung gilt das Dockerfile im Wurzelverzeichnis: Es baut
+# Frontend und Backend zu einem Dienst zusammen, damit auf dem kostenlosen
+# Tarif nur ein Dienst aufwachen muss statt zwei.
+#
+# Diese Datei bleibt vorerst bestehen, weil der Render-Dienst noch darauf
+# zeigt. Sobald dort "Root Directory" geleert und "Dockerfile Path" auf
+# ./Dockerfile gestellt ist, kann sie geloescht werden.
+
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /src
 COPY pom.xml .
