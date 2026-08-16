@@ -4,6 +4,7 @@ import { fetchBooks } from "../api";
 import type { Book } from "../types";
 import CoverChip from "../components/CoverChip";
 import StarRating from "../components/StarRating";
+import LadeHinweis from "../components/LadeHinweis";
 import { clampRating } from "../utils";
 
 export default function Home(): JSX.Element {
@@ -33,7 +34,7 @@ export default function Home(): JSX.Element {
       </div>
 
       {loading ? (
-        <p>Lade Bibliothek…</p>
+        <LadeHinweis text="Lade Bibliothek…" />
       ) : books.length === 0 ? (
         <div className="card empty-state">
           <p>Noch keine Bücher erfasst.</p>

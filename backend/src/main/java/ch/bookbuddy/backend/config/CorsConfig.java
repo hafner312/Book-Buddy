@@ -30,10 +30,14 @@ public class CorsConfig {
              */
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
+                registry.addMapping("/api/**")
+                        // Nur noch die lokalen Entwicklungs-Adressen: Die
+                        // Freigabe fuer den frueheren, getrennten Frontend-
+                        // Dienst ist entfallen, seit beides ein Dienst ist und
+                        // die Aufrufe von derselben Herkunft kommen.
                         .allowedOrigins(
                                 "http://localhost:5173",
-                                "https://bookbuddy-frontend-o8mk.onrender.com")
+                                "http://127.0.0.1:5173")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }

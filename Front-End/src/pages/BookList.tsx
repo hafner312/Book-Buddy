@@ -4,6 +4,7 @@ import type { Book } from "../types";
 import { STATUS_LABELS, STATUS_ORDER } from "../types";
 import BookCard from "../components/BookCard";
 import BookEditor from "../components/BookEditor";
+import LadeHinweis from "../components/LadeHinweis";
 import Modal from "../components/Modal";
 
 type SortKey = "title" | "author" | "rating";
@@ -110,7 +111,7 @@ export default function BookList(): JSX.Element {
       </div>
 
       {loading ? (
-        <p>Lade Bücher…</p>
+        <LadeHinweis text="Lade Bücher…" />
       ) : loadError ? (
         <p className="form-error">{loadError}</p>
       ) : filtered.length === 0 ? (

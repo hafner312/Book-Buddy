@@ -696,3 +696,56 @@
     align-items: flex-start;
   }
 }
+
+/* ---------- Ladehinweis beim Aufwachen des Servers ----------
+   Die kostenlose Bereitstellung pausiert den Dienst bei Inaktivitaet. Der
+   erste Aufruf danach dauert lange - ohne Erklaerung wirkt die Seite kaputt. */
+.lade-hinweis-kurz {
+  color: var(--muted, #6b7280);
+}
+
+/* .card selbst bringt keinen Innenabstand mit - den setzen erst die
+   einzelnen Varianten, wie hier. */
+.lade-hinweis {
+  max-width: 34rem;
+  padding: 1.2rem 1.4rem 1.3rem;
+}
+
+.lade-hinweis-kopf {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.lade-hinweis p {
+  margin: 0 0 0.9rem;
+  line-height: 1.55;
+}
+
+.lade-hinweis .progress-track {
+  margin-bottom: 0.5rem;
+}
+
+.lade-hinweis .field-hint {
+  margin: 0;
+}
+
+/* Pulsierender Punkt: zeigt, dass etwas laeuft, ohne sich zu drehen */
+.lade-punkt {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+  animation: lade-puls 1.4s ease-in-out infinite;
+}
+
+@keyframes lade-puls {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lade-punkt { animation: none; opacity: 0.6; }
+}
