@@ -34,4 +34,23 @@ FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=backend /src/target/*.jar app.jar
 EXPOSE 8080
-CMD ["sh", "-c", "java -jar app.jar --server.port=$PORT --spring.profiles.active=render"]
+
+# Die JVM-Schalter zielen auf schnellen Start, nicht auf Dauerleistung.
+#
+# Der kostenlose Tarif gibt dem Dienst 0.1 CPU. Damit brauchte Spring 126
+# Sekunden bis zur Bereitschaft - so lange wartet die Bereitstellung nicht,
+# sie hielt den Dienst fuer haengengeblieben, beendete ihn und versuchte es
+# erneut. Das Ergebnis war eine Neustartschleife und am Ende ein Dienst, der
+# gar nichts mehr auslieferte.
+#
+#   TieredStopAtLevel=1  laesst die aufwendige zweite Uebersetzungsstufe weg.
+#                        Kostet Dauerleistung, die eine Demo nicht braucht.
+#   UseSerialGC          vermeidet mehrere Aufraeum-Faeden, die sich auf
+#                        0.1 CPU nur gegenseitig behindern.
+#   MaxRAMPercentage=70  gibt der JVM Luft; gemessen nutzt die Anwendung im
+#                        Betrieb nur rund 145 MB von 512.
+#   Xss512k              kleinere Fadenstapel, spart Speicher bei vielen
+#                        Tomcat-Faeden.
+#
+# Gemessen bei 0.1 CPU und 512 MB bis zur ersten Antwort: 153 s ohne, 67 s mit.
+CMD ["sh", "-c", "java -XX:TieredStopAtLevel=1 -XX:+UseSerialGC -XX:MaxRAMPercentage=70 -Xss512k -jar app.jar --server.port=$PORT --spring.profiles.active=render"]
