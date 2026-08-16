@@ -30,9 +30,9 @@ export default function GlobalNavigation(): JSX.Element {
         <NavLink to="/add" className={linkClass} onClick={() => setOpen(false)}>
           Buch hinzufügen
         </NavLink>
-        <NavLink to="/impressum" className={linkClass} onClick={() => setOpen(false)}>
-          Impressum
-        </NavLink>
+        {/* Kein Impressum hier: Die Hauptnavigation gehoert den Funktionen der
+            Anwendung. Rechtliches steht in der Fussleiste - dort ist es
+            ohnehin schon verlinkt. */}
       </div>
     </nav>
   );
